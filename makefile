@@ -6,21 +6,12 @@ MKDIR_P ?= mkdir -p
 CC = gcc
 FLAGS = -std=c99
 
-server = server.c
-client = client.c
-SOURCE = $(shell find . -name "*.c" -not -name "$(server)" -not -name "$(client)")
+main = main.c
+
+SOURCE = $(shell find . -name "*.c" -not -name "$(main)")
 HEADERS = $(shell find . -name "*.h")
 
-all:
-	make sockets
-	make build
-sockets:
-	make client
-	make server
-client: $(SOURCE) $(HEADERS)
-	make checkdir
-	$(CC) -o $(BIN)$@ $(SRC)$($@) $(SOURCE) $(FLAGS)
-server: $(SOURCE) $(HEADERS)
+main: $(SOURCE) $(HEADERS)
 	make checkdir
 	$(CC) -o $(BIN)$@ $(SRC)$($@) $(SOURCE) $(FLAGS)
 checkdir:
