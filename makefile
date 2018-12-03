@@ -6,12 +6,12 @@ MKDIR_P ?= mkdir -p
 CC = gcc
 FLAGS = -std=c99
 
-main = main.c
+server = server.c
 
-SOURCE = $(shell find . -name "*.c" -not -name "$(main)")
+SOURCE = $(shell find . -name "*.c" -not -name "$(server)")
 HEADERS = $(shell find . -name "*.h")
 
-main: $(SOURCE) $(HEADERS)
+server: $(SOURCE) $(HEADERS)
 	make checkdir
 	$(CC) -o $(BIN)$@ $(SRC)$($@) $(SOURCE) $(FLAGS)
 checkdir:
