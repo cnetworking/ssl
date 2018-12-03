@@ -39,7 +39,5 @@ int main(int argc, char **args) {
     server_addr.sin_port = htons(port);
     server_addr.sin_addr.s_addr = inet_addr(ip);
 
-
-
     return 0;
 }
