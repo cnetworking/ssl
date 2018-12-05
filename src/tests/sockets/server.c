@@ -94,16 +94,16 @@ void ShowCerts(SSL* ssl) {
 void Servlet(SSL* ssl) {
     char buf[1024] = {0};
     int sd, bytes;
-    const char* ServerResponse="<\Body>\
+    const char* ServerResponse="<\\Body>\
     <Name>aticleworld.com</Name>\
     <year>1.5</year>\
-    <BlogType>Embedede and c\c++<\BlogType>\
+    <BlogType>Embedede and c\\c++<\\BlogType>\
     <Author>amlendra<Author>\
-    <\Body>";
+    <\\Body>";
     const char *cpValidMessage = "<Body>\
     <UserName>aticle<UserName>\
     <Password>123<Password>\
-    <\Body>";
+    <Body>";
     /* do SSL-protocol accept */ 
     if ( SSL_accept(ssl) == FAIL ) {
         ERR_print_errors_fp(stderr);

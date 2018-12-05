@@ -1,6 +1,3 @@
-sockets:
-	make server
-	make client
 server: sockets/server.c
 	gcc -Wall -o bin/server sockets/server.c -L/usr/local/lib -lssl -lcrypto
 client: sockets/client.c

@@ -9,7 +9,7 @@ SSL = -L/usr/local/lib -lssl -lcrypto
 
 server = server.c
 
-SOURCE = $(shell find . -name "*.c" -not -name "$(server)")
+SOURCE = $(shell find . -name "*.c" -not -name "$(server)" -not -name "tests")
 HEADERS = $(shell find . -name "*.h")
 
 server: $(SOURCE) $(HEADERS)

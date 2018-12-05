@@ -94,7 +94,7 @@ int main(int count, char *strings[]) {
         const char *cpRequestMessage = "<Body>\
         <UserName>%s<UserName>\
         <Password>%s<Password>\
-        <\Body>";							 
+        <\\Body>";							 
         printf("Enter the User Name : ");
         scanf("%s",acUsername);
         printf("\n\nEnter the Password : ");
