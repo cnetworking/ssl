@@ -5,6 +5,7 @@ MKDIR_P ?= mkdir -p
 
 CC = gcc
 FLAGS = -std=c99
+SSL = -L/usr/local/lib -lssl -lcrypto
 
 server = server.c
 
@@ -13,7 +14,7 @@ HEADERS = $(shell find . -name "*.h")
 
 server: $(SOURCE) $(HEADERS)
 	make checkdir
-	$(CC) -o $(BIN)$@ $(SRC)$($@) $(SOURCE) $(FLAGS)
+	$(CC) -o $(BIN)$@ $(SRC)$($@) $(SOURCE) $(FLAGS) $(SSL)
 checkdir:
 	$(MKDIR_P) $(dir $(BIN))
 .PHONY: build
