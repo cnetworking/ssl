@@ -1,3 +1,5 @@
+// https://aticleworld.com/ssl-server-client-using-openssl-in-c/
+
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
