@@ -13,10 +13,10 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
-#include "ssl.h"
+#include "ssl/ssl.h"
 
 int main(int argc, char **args) {
-    printf("main\n");
+    printf("server\n");
 
     char *ip = "192.168.1.245";
     int port = 3000;

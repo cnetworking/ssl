@@ -15,6 +15,9 @@ HEADERS = $(shell find . -name "*.h")
 server: $(SOURCE) $(HEADERS)
 	make checkdir
 	$(CC) -o $(BIN)$@ $(SRC)$($@) $(SOURCE) $(FLAGS) $(SSL)
+client: $(SOURCE) $(HEADERS)
+	make checkdir
+	$(CC) -o $(BIN)$@ $(SRC)$($@) $(SOURCE) $(FLAGS) $(SSL)
 checkdir:
 	$(MKDIR_P) $(dir $(BIN))
 .PHONY: build
