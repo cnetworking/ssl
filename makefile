@@ -8,10 +8,13 @@ FLAGS = -std=c99
 SSL = -L/usr/local/lib -lssl -lcrypto
 
 server = server.c
+client = client.c
 
-SOURCE = $(shell find ./src -name "*.c" -not -name "$(server)")
+SOURCE = $(shell find ./src -name "*.c" -not -name "$(server)" -not -name "$(client)")
 HEADERS = $(shell find . -name "*.h")
-
+sockets:
+	make server
+	make client
 server: $(SOURCE) $(HEADERS)
 	make checkdir
 	$(CC) -o $(BIN)$@ $(SRC)$($@) $(SOURCE) $(FLAGS) $(SSL)
