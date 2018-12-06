@@ -67,49 +67,49 @@ void ShowCerts(SSL* ssl) {
     }
 }
 
-int main(int count, char *strings[]) {
-    SSL_CTX *ctx;
-    int server;
-    SSL *ssl;
-    char buf[1024];
-    char acClientRequest[1024] ={0};
-    int bytes;
-    char *hostname, *portnum;
-    if ( count != 3 ) {
-        printf("usage: %s <hostname> <portnum>\n", strings[0]);
-        exit(0);
-    }
-    SSL_library_init();
-    hostname=strings[1];
-    portnum=strings[2];
-    ctx = InitCTX();
-    server = OpenConnection(hostname, atoi(portnum));
-    ssl = SSL_new(ctx);      /* create new SSL connection state */
-    SSL_set_fd(ssl, server);    /* attach the socket descriptor */
-    /* perform the connection */
-    if ( SSL_connect(ssl) == FAIL ) {
-        ERR_print_errors_fp(stderr);
-    } else {  
-        char acUsername[16] ={0};
-        char acPassword[16] ={0};
-        const char *cpRequestMessage = "<Body>\
-        <UserName>%s<UserName>\
-        <Password>%s<Password>\
-        <\\Body>";							 
-        printf("Enter the User Name : ");
-        scanf("%s",acUsername);
-        printf("\n\nEnter the Password : ");
-        scanf("%s",acPassword);
-        sprintf(acClientRequest, cpRequestMessage, acUsername,acPassword);   /* construct reply */
-        printf("\n\nConnected with %s encryption\n", SSL_get_cipher(ssl));
-        ShowCerts(ssl);        /* get any certs */
-        SSL_write(ssl,acClientRequest, strlen(acClientRequest));   /* encrypt & send message */
-        bytes = SSL_read(ssl, buf, sizeof(buf)); /* get reply & decrypt */
-        buf[bytes] = 0;
-        printf("Received: \"%s\"\n", buf);
-        SSL_free(ssl);        /* release connection state */
-    }
-    close(server);         /* close socket */
-    SSL_CTX_free(ctx);        /* release context */
-    return 0;
-}
+// int main(int count, char *strings[]) {
+//     SSL_CTX *ctx;
+//     int server;
+//     SSL *ssl;
+//     char buf[1024];
+//     char acClientRequest[1024] ={0};
+//     int bytes;
+//     char *hostname, *portnum;
+//     if ( count != 3 ) {
+//         printf("usage: %s <hostname> <portnum>\n", strings[0]);
+//         exit(0);
+//     }
+//     SSL_library_init();
+//     hostname=strings[1];
+//     portnum=strings[2];
+//     ctx = InitCTX();
+//     server = OpenConnection(hostname, atoi(portnum));
+//     ssl = SSL_new(ctx);      /* create new SSL connection state */
+//     SSL_set_fd(ssl, server);    /* attach the socket descriptor */
+//     /* perform the connection */
+//     if ( SSL_connect(ssl) == FAIL ) {
+//         ERR_print_errors_fp(stderr);
+//     } else {  
+//         char acUsername[16] ={0};
+//         char acPassword[16] ={0};
+//         const char *cpRequestMessage = "<Body>\
+//         <UserName>%s<UserName>\
+//         <Password>%s<Password>\
+//         <\\Body>";							 
+//         printf("Enter the User Name : ");
+//         scanf("%s",acUsername);
+//         printf("\n\nEnter the Password : ");
+//         scanf("%s",acPassword);
+//         sprintf(acClientRequest, cpRequestMessage, acUsername,acPassword);   /* construct reply */
+//         printf("\n\nConnected with %s encryption\n", SSL_get_cipher(ssl));
+//         ShowCerts(ssl);        /* get any certs */
+//         SSL_write(ssl,acClientRequest, strlen(acClientRequest));   /* encrypt & send message */
+//         bytes = SSL_read(ssl, buf, sizeof(buf)); /* get reply & decrypt */
+//         buf[bytes] = 0;
+//         printf("Received: \"%s\"\n", buf);
+//         SSL_free(ssl);        /* release connection state */
+//     }
+//     close(server);         /* close socket */
+//     SSL_CTX_free(ctx);        /* release context */
+//     return 0;
+// }

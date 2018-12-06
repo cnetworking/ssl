@@ -129,35 +129,35 @@ void Servlet(SSL* ssl) {
     close(sd);          /* close connection */
 }
 
-int main(int count, char *Argc[]) {
-    SSL_CTX *ctx;
-    int server;
-    char *portnum;
-    //Only root user have the permsion to run the server
-    if(!isRoot()) {
-        printf("This program must be run as root/sudo user!!");
-        exit(0);
-    }
-    if ( count != 2 ) {
-        printf("Usage: %s <portnum>\n", Argc[0]);
-        exit(0);
-    }
-    // Initialize the SSL library
-    SSL_library_init();
-    portnum = Argc[1];
-    ctx = InitServerCTX();        /* initialize SSL */
-    LoadCertificates(ctx, "mycert.pem", "mycert.pem"); /* load certs */
-    server = OpenListener(atoi(portnum));    /* create server socket */
-    while (1) {
-        struct sockaddr_in addr;
-        socklen_t len = sizeof(addr);
-        SSL *ssl;
-        int client = accept(server, (struct sockaddr*)&addr, &len);  /* accept connection as usual */
-        printf("Connection: %s:%d\n",inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
-        ssl = SSL_new(ctx);              /* get new SSL state with context */
-        SSL_set_fd(ssl, client);      /* set connection socket to SSL state */
-        Servlet(ssl);         /* service connection */
-    }
-    close(server);          /* close server socket */
-    SSL_CTX_free(ctx);         /* release context */
-}
+// int main(int count, char *Argc[]) {
+//     SSL_CTX *ctx;
+//     int server;
+//     char *portnum;
+//     //Only root user have the permsion to run the server
+//     if(!isRoot()) {
+//         printf("This program must be run as root/sudo user!!");
+//         exit(0);
+//     }
+//     if ( count != 2 ) {
+//         printf("Usage: %s <portnum>\n", Argc[0]);
+//         exit(0);
+//     }
+//     // Initialize the SSL library
+//     SSL_library_init();
+//     portnum = Argc[1];
+//     ctx = InitServerCTX();        /* initialize SSL */
+//     LoadCertificates(ctx, "mycert.pem", "mycert.pem"); /* load certs */
+//     server = OpenListener(atoi(portnum));    /* create server socket */
+//     while (1) {
+//         struct sockaddr_in addr;
+//         socklen_t len = sizeof(addr);
+//         SSL *ssl;
+//         int client = accept(server, (struct sockaddr*)&addr, &len);  /* accept connection as usual */
+//         printf("Connection: %s:%d\n",inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
+//         ssl = SSL_new(ctx);              /* get new SSL state with context */
+//         SSL_set_fd(ssl, client);      /* set connection socket to SSL state */
+//         Servlet(ssl);         /* service connection */
+//     }
+//     close(server);          /* close server socket */
+//     SSL_CTX_free(ctx);         /* release context */
+// }
