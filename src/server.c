@@ -56,6 +56,7 @@ int main(int argc, char **args) {
 
     if (accepted_socket == -1) {
         printf("unable to accept client\n");
+        exit(-1);
     } else {
         // Do that ssl stuff
         sslctx = SSL_CTX_new(SSLv23_server_method());
@@ -73,6 +74,7 @@ int main(int argc, char **args) {
             //Error occurred, log and close down ssl
             printf("ssl error\n");
             shutdown_ssl(c_ssl);
+            exit(-1);
         } else {
             while (1) {
                 char read_buffer[256];
