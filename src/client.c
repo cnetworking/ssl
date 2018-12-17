@@ -18,7 +18,7 @@
 int main(int argc, char **args) {
     printf("client\n");
 
-    char *ip = "192.168.1.245";
+    char *ip = "192.168.1.231";
     int port = 3000;
     int loop = 0;
     char *cert_name = "keys/cert/certificate.pem";
