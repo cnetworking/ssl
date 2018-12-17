@@ -83,7 +83,7 @@ int main(int argc, char **args) {
         printf("ssl initiated on client\n");
         // Here is the SSL Accept portion. Now all reads and writes must use SSL
         int ssl_err = SSL_accept(c_ssl);
-        if (ssl_err <= 0) {
+        if (ssl_err < 0) {
             //Error occurred, log and close down ssl
             printf("ssl error: %i\n", ssl_err);
             shutdown_ssl(c_ssl);
