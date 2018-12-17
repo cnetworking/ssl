@@ -44,7 +44,13 @@ int open_connection(const char *hostname, int port) {
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = *(long*)(host->h_addr);
-    if (connect(sd, (struct sockaddr *) &addr, sizeof(addr)) != 0 ) {
+    int connect_status;
+    connect_status = connect(
+        sd,
+        (struct sockaddr *) &addr,
+        sizeof(addr)
+    );
+    if (connect_status != 0) {
         close(sd);
         perror(hostname);
         abort();
