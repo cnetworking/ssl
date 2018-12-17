@@ -91,7 +91,9 @@ int main(int argc, char **args) {
         } else {
             printf("working\n");
             // Write to the server
-            char write_buffer[256] = "hello server!\n";
+            // char write_buffer[256] = "hello server!\n";
+            char write_buffer[256];
+            fgets(write_buffer, sizeof(write_buffer), stdin);
             SSL_write(c_ssl, write_buffer, sizeof(write_buffer));
             printf("wrote \n%s\n to server", write_buffer);        
         }
