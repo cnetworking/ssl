@@ -58,6 +58,7 @@ int main(int argc, char **args) {
         printf("unable to accept client\n");
         exit(-1);
     } else {
+        printf("accepted socket\n");
         // Do that ssl stuff
         sslctx = SSL_CTX_new(SSLv23_server_method());
         SSL_CTX_set_options(sslctx, SSL_OP_SINGLE_DH_USE);
@@ -70,6 +71,7 @@ int main(int argc, char **args) {
         
         // Here is the SSL Accept portion. Now all reads and writes must use SSL
         int ssl_err = SSL_accept(c_ssl);
+        printf("ssl error server: %i\n", ssl_err);
         if (ssl_err <= 0) {
             //Error occurred, log and close down ssl
             printf("ssl error\n");

@@ -71,12 +71,14 @@ int main(int argc, char **args) {
         
         // Here is the SSL Accept portion. Now all reads and writes must use SSL
         int ssl_err = SSL_accept(c_ssl);
+        printf("SSL ERROR: %i\n", ssl_err);
         if (ssl_err <= 0) {
             //Error occurred, log and close down ssl
             printf("ssl error\n");
             shutdown_ssl(c_ssl);
             exit(-1);
         } else {
+            printf("working\n");
             // Write to the server
             char write_buffer[256] = "hello server!\n";
             SSL_write(c_ssl, write_buffer, sizeof(write_buffer));
