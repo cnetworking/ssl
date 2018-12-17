@@ -57,7 +57,7 @@ int main(int argc, char **args) {
         printf("unable to accept client\n");
     } else {
         // Do that ssl stuff
-        sslctx = SSL_CTX_new( SSLv23_server_method());
+        sslctx = SSL_CTX_new(SSLv23_server_method());
         SSL_CTX_set_options(sslctx, SSL_OP_SINGLE_DH_USE);
 
         int use_cert = SSL_CTX_use_certificate_file(sslctx, cert_name , SSL_FILETYPE_PEM);
