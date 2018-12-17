@@ -15,10 +15,26 @@
 
 #include "ssl/ssl.h"
 
+SSL_CTX* init_ctx(void) {
+    SSL_METHOD *method;
+    SSL_CTX *ctx;
+
+    OpenSSL_add_all_algorithms();
+    SSL_load_error_strings();
+    method = SSLv2_client_method();
+    ctx = SSL_CTX_new(method);
+    if (ctx == NULL) {
+        ERR_print_errors_fp(stderr);
+        abort();
+    }
+    return ctx;
+}
+
 int main(int argc, char **args) {
     printf("client\n");
 
-    char *ip = "192.168.1.231";
+    // char *ip = "192.168.1.231";
+    char *ip = "10.10.81.184";
     int port = 3000;
     int loop = 0;
     char *cert_name = "keys/cert/certificate.pem";
@@ -41,7 +57,8 @@ int main(int argc, char **args) {
     struct sockaddr_in server_address;
     server_address.sin_family = INADDR_ANY;
     server_address.sin_port = htons(port);
-    server_address.sin_addr.s_addr = inet_addr(ip);
+    // server_address.sin_addr.s_addr = inet_addr(ip);
+    server_address.sin_addr.s_addr = INADDR_ANY;
 
     // Make the connection to another socket
     int connection_status = connect(
@@ -59,16 +76,13 @@ int main(int argc, char **args) {
         printf("connected to the server socket\n");
         loop = 1;
 
+        int server_socket;
         // Do that ssl stuff
-        sslctx = SSL_CTX_new(SSLv23_server_method());
-        SSL_CTX_set_options(sslctx, SSL_OP_SINGLE_DH_USE);
-
-        int use_cert = SSL_CTX_use_certificate_file(sslctx, cert_name , SSL_FILETYPE_PEM);
-        int use_prv = SSL_CTX_use_PrivateKey_file(sslctx, private_key_name, SSL_FILETYPE_PEM);
-
+        sslctx = InitCTX();
+        server_socket = OpenConnection(ip, atoi(port));
         c_ssl = SSL_new(sslctx);
-        SSL_set_fd(c_ssl, client_socket);
-        
+        SSL_set_fd(c_ssl, server_socket);
+
         // Here is the SSL Accept portion. Now all reads and writes must use SSL
         int ssl_err = SSL_accept(c_ssl);
         printf("SSL ERROR: %i\n", ssl_err);

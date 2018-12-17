@@ -68,6 +68,7 @@ int main(int argc, char **args) {
 
         c_ssl = SSL_new(sslctx);
         SSL_set_fd(c_ssl, accepted_socket);
+        printf("ssl initiated on server\n");
         
         // Here is the SSL Accept portion. Now all reads and writes must use SSL
         int ssl_err = SSL_accept(c_ssl);
