@@ -8,7 +8,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-
 #include <openssl/bio.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>

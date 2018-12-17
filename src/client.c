@@ -19,14 +19,7 @@ SSL_CTX* init_ctx(void) {
     SSL_METHOD *method;
     SSL_CTX *ctx;
 
-    OpenSSL_add_all_algorithms();
-    SSL_load_error_strings();
-    method = SSLv2_client_method();
-    ctx = SSL_CTX_new(method);
-    if (ctx == NULL) {
-        ERR_print_errors_fp(stderr);
-        abort();
-    }
+    
     return ctx;
 }
 
@@ -78,8 +71,12 @@ int main(int argc, char **args) {
 
         int server_socket;
         // Do that ssl stuff
-        sslctx = InitCTX();
-        server_socket = OpenConnection(ip, atoi(port));
+        sslctx = SSL_CTX_new(SSLv23_client_method());
+        if (sslctx == NULL) {
+            ERR_print_errors_fp(stderr);
+            abort();
+        }
+        server_socket = open_connection(ip, port);
         c_ssl = SSL_new(sslctx);
         SSL_set_fd(c_ssl, server_socket);
 
