@@ -20,9 +20,11 @@ int main(int argc, char **args) {
 
     char *ip = "192.168.1.245";
     int port = 3000;
+    char *cert_name = "cert.pem";
+    char *private_key_name = "priv.pem";
 
     // Create sockets and ssl instance
-    int sockfd, newsockfd;
+    int sockfd;
     SSL_CTX *sslctx;
     SSL *c_ssl;
 
@@ -48,7 +50,31 @@ int main(int argc, char **args) {
 
     listen(sockfd, 5);
 
-    newsockfd = accept(sockfd, (struct sockaddr_in *), &cli_addr, &clien);
+    // Accept the connection
+    int accepted_socket = accept(sockfd, NULL, NULL);
+
+    if (accepted_socket == -1) {
+        printf("unable to accept client\n");
+    } else {
+        // Do that ssl stuff
+        sslctx = SSL_CTX_new( SSLv23_server_method());
+        SSL_CTX_set_options(sslctx, SSL_OP_SINGLE_DH_USE);
+
+        int use_cert = SSL_CTX_use_certificate_file(sslctx, cert_name , SSL_FILETYPE_PEM);
+        int use_prv = SSL_CTX_use_PrivateKey_file(sslctx, private_key_name, SSL_FILETYPE_PEM);
+
+        c_ssl = SSL_new(sslctx);
+        SSL_set_fd(c_ssl, accepted_socket);
+        
+        // Here is the SSL Accept portion. Now all reads and writes must use SSL
+        int ssl_err = SSL_accept(c_ssl);
+        if (ssl_err <= 0) {
+            //Error occurred, log and close down ssl
+            printf("ssl error\n");
+            shutdown_ssl(c_ssl);
+        }
+    }
+
 
     return 0;
 }

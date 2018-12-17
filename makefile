@@ -10,7 +10,7 @@ SSL = -L/usr/local/lib -lssl -lcrypto
 server = server.c
 client = client.c
 
-SOURCE = $(shell find ./src -name "*.c" -not -name "$(server)" -not -name "$(client)")
+SOURCE = $(shell find ./src -name "*.c" -not -name "$(server)" -not -name "$(client)" -not -iname "*.d.c")
 HEADERS = $(shell find . -name "*.h")
 sockets:
 	make server

@@ -17,7 +17,6 @@
 
 int main() {
     int aPortNumber = 3000;
-    
     int sockfd, newsockfd;
     SSL_CTX *sslctx;
     SSL *cSSL;
