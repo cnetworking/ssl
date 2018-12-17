@@ -33,11 +33,22 @@ int main(int argc, char **args) {
         exit(-1);
     }
 
+    // Create the socket address
     struct sockaddr_in server_addr;
     bzero((char *) &server_addr, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     server_addr.sin_addr.s_addr = inet_addr(ip);
+    
+    bind(
+        sockfd, 
+        (struct sockaddr *) &server_addr,
+        sizeof(server_addr)
+    );
+
+    listen(sockfd, 5);
+
+    newsockfd = accept(sockfd, (struct sockaddr_in *), &cli_addr, &clien);
 
     return 0;
 }
