@@ -20,8 +20,8 @@ int main(int argc, char **args) {
 
     char *ip = "192.168.1.245";
     int port = 3000;
-    char *cert_name = "cert.pem";
-    char *private_key_name = "priv.pem";
+    char *cert_name = "keys/cert.pem";
+    char *private_key_name = "keys/priv.pem";
 
     // Create sockets and ssl instance
     int sockfd;
@@ -40,7 +40,8 @@ int main(int argc, char **args) {
     bzero((char *) &server_addr, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
-    server_addr.sin_addr.s_addr = inet_addr(ip);
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    // server_addr.sin_addr.s_addr = inet_addr(ip);
     
     bind(
         sockfd, 
