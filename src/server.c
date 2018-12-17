@@ -20,8 +20,8 @@ int main(int argc, char **args) {
 
     char *ip = "192.168.1.245";
     int port = 3000;
-    char *cert_name = "keys/cert.pem";
-    char *private_key_name = "keys/priv.pem";
+    char *cert_name = "keys/cert/certificate.pem";
+    char *private_key_name = "keys/cert/key.pem";
 
     // Create sockets and ssl instance
     int sockfd;
@@ -73,6 +73,12 @@ int main(int argc, char **args) {
             //Error occurred, log and close down ssl
             printf("ssl error\n");
             shutdown_ssl(c_ssl);
+        } else {
+            while (1) {
+                char read_buffer[256];
+                SSL_read(c_ssl, (char *)read_buffer, sizeof(read_buffer));
+                printf("client: %s", read_buffer);
+            }
         }
     }
 
