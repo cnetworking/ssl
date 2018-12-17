@@ -49,9 +49,11 @@ int main(int argc, char **args) {
         loop = 1;
     }
 
-    while (loop) {
-        
-    }
+    // while (loop) {
+
+    // }
+    char write_buffer[256] = "hello server!\n";
+    SSL_write(c_ssl, write_buffer, sizeof(write_buffer);
 
     return 0;
 }
